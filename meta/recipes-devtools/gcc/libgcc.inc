@@ -39,4 +39,10 @@ do_package_write_deb[depends] += "virtual/${MLPREFIX}libc:do_packagedata"
 do_package_write_rpm[depends] += "virtual/${MLPREFIX}libc:do_packagedata"
 
 INSANE_SKIP_${PN}-dev = "staticdev"
+INSANE_SKIP_${PN} = "staticdev"
+INSANE_SKIP_libgcc_eh = "staticdev"
+INSANE_SKIP_libgcc_eh-dev = "staticdev"
+INSANE_SKIP_libgcov-dev = "staticdev"
+INSANE_SKIP_libgcov = "staticdev"
+
 
