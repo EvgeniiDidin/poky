@@ -5,16 +5,14 @@ SRC_URI += "file://acinclude.m4 \
             file://quiet-debugfs.patch \
             file://run-ptest \
             file://ptest.patch \
-            file://mkdir.patch \
             file://Revert-mke2fs-enable-the-metadata_csum-and-64bit-fea.patch \
             file://mkdir_p.patch \
-            file://reproducible-doc.patch \
             file://0001-misc-create_inode.c-set-dir-s-mode-correctly.patch \
 "
 
 SRC_URI_append_class-native = " file://e2fsprogs-fix-missing-check-for-permission-denied.patch"
 
-SRCREV = "2a13c84b513aa094d1cda727e92d35a89dd777da"
+SRCREV = "40e66e2e8be046f909dfff73b3909f15c9d0f400"
 UPSTREAM_CHECK_GITTAGREGEX = "v(?P<pver>\d+\.\d+(\.\d+)*)$"
 
 EXTRA_OECONF += "--libdir=${base_libdir} --sbindir=${base_sbindir} \
