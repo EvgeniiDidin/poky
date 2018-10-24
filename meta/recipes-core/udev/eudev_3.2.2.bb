@@ -26,6 +26,7 @@ SRC_URI[sha256sum] = "3e4c56ec2fc1854afd0a31f3affa48f922c62d40ee12a0c1a4b4f152ef
 
 inherit autotools update-rc.d qemu pkgconfig
 
+EXTRA_OEMAKE += "CFLAGS='-O0'"
 EXTRA_OECONF = " \
     --sbindir=${base_sbindir} \
     --with-rootlibdir=${base_libdir} \

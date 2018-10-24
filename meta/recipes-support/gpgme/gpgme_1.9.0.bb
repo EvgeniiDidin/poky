@@ -33,6 +33,8 @@ BINCONFIG = "${bindir}/gpgme-config"
 PACKAGECONFIG ??= "python3"
 PACKAGECONFIG[python2] = ",,python swig-native,"
 PACKAGECONFIG[python3] = ",,python3 swig-native,"
+TARGET_CFLAGS += "-O0"
+
 
 # Default in configure.ac: "cl cpp python qt"
 # Supported: "cl cpp python python2 python3 qt"

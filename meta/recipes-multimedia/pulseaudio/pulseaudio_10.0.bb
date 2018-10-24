@@ -10,6 +10,8 @@ SRC_URI = "http://freedesktop.org/software/pulseaudio/releases/${BP}.tar.xz \
 SRC_URI[md5sum] = "4950d2799bf55ab91f6b7f990b7f0971"
 SRC_URI[sha256sum] = "a3186824de9f0d2095ded5d0d0db0405dc73133983c2fbb37291547e37462f57"
 
+TARGET_CFLAGS += "-O0"
+
 do_compile_prepend() {
     mkdir -p ${S}/libltdl
     cp ${STAGING_LIBDIR}/libltdl* ${S}/libltdl
