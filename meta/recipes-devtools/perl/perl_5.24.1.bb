@@ -185,6 +185,9 @@ do_compile() {
         # Fix to avoid recursive substitution of path
         sed -i -e 's|(@libpath, ".*"|(@libpath, "${STAGING_LIBDIR}"|g' cpan/ExtUtils-MakeMaker/lib/ExtUtils/Liblist/Kid.pm
 
+	cd ../recipe-sysroot/lib/
+	ln -s libnsl.so.1 libnsl.so
+	cd -
         cd Cross
         oe_runmake perl LD="${CCLD}"
 }
