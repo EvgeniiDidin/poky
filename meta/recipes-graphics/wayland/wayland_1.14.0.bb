@@ -20,6 +20,8 @@ SRC_URI[sha256sum] = "ed80cabc0961a759a42092e2c39aabfc1ec9a13c86c98bbe2b812f008d
 
 inherit autotools pkgconfig
 
+TARGET_CFLAGS += "-O0"
+
 EXTRA_OECONF = "--disable-documentation --with-host-scanner"
 EXTRA_OECONF_class-native = "--disable-documentation --disable-libraries"
 

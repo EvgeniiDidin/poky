@@ -16,6 +16,7 @@ SRC_URI = "https://wayland.freedesktop.org/releases/${BPN}-${PV}.tar.xz \
 "
 SRC_URI[md5sum] = "9c42a4c51a1b9f35d040fa9d45ada36d"
 SRC_URI[sha256sum] = "cde1d55e8dd70c3cbb3d1ec72f60e60000041579caa1d6a262bd9c35e93723a5"
+TARGET_CFLAGS += "-O0"
 
 inherit autotools pkgconfig useradd distro_features_check
 # depends on virtual/egl
