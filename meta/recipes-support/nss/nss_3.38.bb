@@ -25,11 +25,10 @@ SRC_URI = "http://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/${VERSIO
            file://nss-fix-nsinstall-build.patch \
            file://disable-Wvarargs-with-clang.patch \
            file://pqg.c-ULL_addend.patch \
-           file://Fix-compilation-for-X32.patch \
            "
 
-SRC_URI[md5sum] = "ebb44f1394250d2cf6ec3c2e3d71fa20"
-SRC_URI[sha256sum] = "933439214dc03ee60e86d1419c19e1568998b0776dde987f41fa70ced6cd08dc"
+SRC_URI[md5sum] = "ac9065460a7634ba8eb0f942f404e773"
+SRC_URI[sha256sum] = "2c643d3c08d6935f4d325f40743719b6990aa25a79ec2f8f712c99d086672f62"
 
 UPSTREAM_CHECK_URI = "https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Releases"
 UPSTREAM_CHECK_REGEX = "NSS_(?P<pver>.+)_release_notes"
@@ -89,6 +88,8 @@ do_compile() {
         OS_TEST=ppc64
     elif [ "${TARGET_ARCH}" = "mips" -o "${TARGET_ARCH}" = "mipsel" -o "${TARGET_ARCH}" = "mips64" -o "${TARGET_ARCH}" = "mips64el" ]; then
         OS_TEST=mips
+    elif [ "${TARGET_ARCH}" = "aarch64_be" ]; then
+        OS_TEST="aarch64"
     else
         OS_TEST="${TARGET_ARCH}"
     fi
@@ -144,6 +145,9 @@ do_install() {
         OS_TEST=ppc64
     elif [ "${TARGET_ARCH}" = "mips" -o "${TARGET_ARCH}" = "mipsel" -o "${TARGET_ARCH}" = "mips64" -o "${TARGET_ARCH}" = "mips64el" ]; then
         OS_TEST=mips
+    elif [ "${TARGET_ARCH}" = "aarch64_be" ]; then
+        CPU_ARCH=aarch64
+        OS_TEST="aarch64"
     else
         OS_TEST="${TARGET_ARCH}"
     fi
@@ -211,9 +215,11 @@ do_install_append_class-target() {
     # Create a blank certificate
     mkdir -p ${D}${sysconfdir}/pki/nssdb/
     touch ./empty_password
-    certutil -N -d ${D}${sysconfdir}/pki/nssdb/ -f ./empty_password
+    certutil -N -d sql:${D}${sysconfdir}/pki/nssdb/ -f ./empty_password
     chmod 644 ${D}${sysconfdir}/pki/nssdb/*.db
     rm ./empty_password
+    # Remove build path prefix
+    sed -i "s:${D}::g"  ${D}${sysconfdir}/pki/nssdb/pkcs11.txt
 }
 
 PACKAGE_WRITE_DEPS += "nss-native"
