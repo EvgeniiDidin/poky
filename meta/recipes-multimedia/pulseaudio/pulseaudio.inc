@@ -83,7 +83,6 @@ EXTRA_OECONF = "\
 		--with-udev-rules-dir=`pkg-config --variable=udevdir udev`/rules.d \
                 ac_cv_header_valgrind_memcheck_h=no \
                 --disable-tests \
-		ac_cv_tls=no \
 "
 
 # soxr (the SoX Resampler library) doesn't seem to be currently packaged in
