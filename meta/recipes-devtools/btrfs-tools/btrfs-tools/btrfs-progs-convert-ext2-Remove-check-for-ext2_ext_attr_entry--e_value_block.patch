@@ -1,0 +1,81 @@
+From patchwork Wed Mar 14 00:56:57 2018
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-Patchwork-Submitter: Qu Wenruo <wqu@suse.com>
+X-Patchwork-Id: 10281327
+Return-Path: <linux-btrfs-owner@kernel.org>
+Received: from mail.wl.linuxfoundation.org (pdx-wl-mail.web.codeaurora.org
+	[172.30.200.125])
+	by pdx-korg-patchwork.web.codeaurora.org (Postfix) with ESMTP id
+	CAF3C6038F for <patchwork-linux-btrfs@patchwork.kernel.org>;
+	Wed, 14 Mar 2018 00:57:09 +0000 (UTC)
+Received: from mail.wl.linuxfoundation.org (localhost [127.0.0.1])
+	by mail.wl.linuxfoundation.org (Postfix) with ESMTP id BBD7C28635
+	for <patchwork-linux-btrfs@patchwork.kernel.org>;
+	Wed, 14 Mar 2018 00:57:09 +0000 (UTC)
+Received: by mail.wl.linuxfoundation.org (Postfix, from userid 486)
+	id B04782863E; Wed, 14 Mar 2018 00:57:09 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
+	pdx-wl-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-6.9 required=2.0 tests=BAYES_00,RCVD_IN_DNSWL_HI
+	autolearn=ham version=3.3.1
+Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
+	by mail.wl.linuxfoundation.org (Postfix) with ESMTP id 2F2B928635
+	for <patchwork-linux-btrfs@patchwork.kernel.org>;
+	Wed, 14 Mar 2018 00:57:09 +0000 (UTC)
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S933110AbeCNA5G (ORCPT
+	<rfc822;patchwork-linux-btrfs@patchwork.kernel.org>);
+	Tue, 13 Mar 2018 20:57:06 -0400
+Received: from victor.provo.novell.com ([137.65.250.26]:43900 "EHLO
+	prv3-mh.provo.novell.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932718AbeCNA5G (ORCPT
+	<rfc822;groupwise-linux-btrfs@vger.kernel.org:0:0>);
+	Tue, 13 Mar 2018 20:57:06 -0400
+Received: from adam-pc.suse.de (prv-ext-foundry1int.gns.novell.com
+	[137.65.251.240])
+	by prv3-mh.provo.novell.com with ESMTP (NOT encrypted);
+	Tue, 13 Mar 2018 18:57:01 -0600
+From: Qu Wenruo <wqu@suse.com>
+To: linux-btrfs@vger.kernel.org
+Cc: dsterba@suse.cz
+Subject: [PATCH] btrfs-progs: convert/ext2: Remove check for
+	ext2_ext_attr_entry->e_value_block
+Date: Wed, 14 Mar 2018 08:56:57 +0800
+Message-Id: <20180314005657.28471-1-wqu@suse.com>
+X-Mailer: git-send-email 2.16.2
+Sender: linux-btrfs-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <linux-btrfs.vger.kernel.org>
+X-Mailing-List: linux-btrfs@vger.kernel.org
+X-Virus-Scanned: ClamAV using ClamSMTP
+
+In latest e2fsprogs (1.44.0) definition of ext2_ext_attr_entry has
+removed member e_value_block, as currently ext* doesn't support it set
+anyway.
+
+So remove such check so that we can pass compile.
+
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+---
+Fast rolling distribution (Arch) catches this much faster.
+---
+ convert/source-ext2.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/convert/source-ext2.c b/convert/source-ext2.c
+index b1492c78693d..070126ec38ec 100644
+--- a/convert/source-ext2.c
++++ b/convert/source-ext2.c
+@@ -422,8 +422,7 @@ static int ext2_xattr_check_entry(struct ext2_ext_attr_entry *entry,
+ {
+ 	size_t value_size = entry->e_value_size;
+ 
+-	if (entry->e_value_block != 0 || value_size > size ||
+-	    entry->e_value_offs + value_size > size)
++	if (value_size > size || entry->e_value_offs + value_size > size)
+ 		return -EIO;
+ 	return 0;
+ }
