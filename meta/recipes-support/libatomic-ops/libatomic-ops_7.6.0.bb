@@ -11,6 +11,7 @@ PV .= "+git${SRCPV}"
 SRCREV = "73c60c5ef1ed370111549ee5aab6d4020ba70ed4"
 SRC_URI = "git://github.com/ivmai/libatomic_ops"
 
+SRC_URI += "file://0002-Add-support-for-ARC-boards.patch"
 S = "${WORKDIR}/git"
 
 ALLOW_EMPTY_${PN} = "1"
