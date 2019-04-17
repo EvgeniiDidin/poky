@@ -17,6 +17,7 @@ RDEPENDS_${PN} = "libgcc"
 SRCREV = "0607132c3200bcead1426e6dc685432008de95de"
 SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/kdave/btrfs-progs.git \
            file://0001-Makefile-build-mktables-using-native-gcc.patch \
+	   file://btrfs-progs-convert-ext2-Remove-check-for-ext2_ext_attr_entry--e_value_block.patch \
            "
 
 inherit autotools-brokensep pkgconfig manpages
