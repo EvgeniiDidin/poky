@@ -7,4 +7,7 @@ GNU M4 also has built-in functions for including files, running shell commands, 
 inherit autotools texinfo
 
 EXTRA_OEMAKE += "'infodir=${infodir}'"
-SRC_URI = "${GNU_MIRROR}/m4/m4-${PV}.tar.gz"
+SRC_URI = "${GNU_MIRROR}/m4/m4-${PV}.tar.gz \
+	file://m4-1.4.18-glibc-change-work-around.patch \
+"
+
