@@ -25,6 +25,8 @@ LOONGSON_MMI = "--disable-loongson-mmi"
 # If target supports neon then disable the 'simd' (ie VFPv2) fallback, otherwise disable neon.
 NEON = "${@bb.utils.contains("TUNE_FEATURES", "neon", "--disable-arm-simd", "--disable-arm-neon" ,d)}"
 
+EXTRA_OEMAKE += "CFLAGS='-O0'"
+
 EXTRA_OECONF = "--disable-gtk ${IWMMXT} ${LOONGSON_MMI} ${NEON}"
 EXTRA_OECONF_class-native = "--disable-gtk"
 EXTRA_OECONF_class-nativesdk = "--disable-gtk"
