@@ -20,6 +20,7 @@ SRC_URI[sha256sum] = "c208a4ff6906cb7f57940aa5bc3a6eed146e50a7cc0a092f52ef2ab650
 
 CACHED_CONFIGUREVARS += "scanf_cv_alloc_modifier=ms"
 
+EXTRA_OECONF += "--disable-tls"
 EXTRA_OECONF_class-native = "${SHARED_EXTRA_OECONF} \
                              --disable-fallocate \
 			     --disable-use-tty-group \
